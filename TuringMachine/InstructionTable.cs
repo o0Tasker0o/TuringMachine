@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TuringMachine
 {
-    public class InstructionTable
+    public class InstructionTable : IInstructionTable
     {
         private Dictionary<String, Instruction> mInstruction;
 

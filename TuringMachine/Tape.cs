@@ -2,7 +2,7 @@
 
 namespace TuringMachine
 {
-    public class Tape
+    public class Tape : ITape
     {
         private List<char?> mSymbols;
         private int mIndex;
