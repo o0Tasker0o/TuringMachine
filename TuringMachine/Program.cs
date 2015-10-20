@@ -13,7 +13,18 @@ namespace TuringMachine
             Console.OutputEncoding = Encoding.Default;
 
             ITape tape = new Tape();
-            IInstructionTable instructionTable = ParseInstructions(args);
+            IInstructionTable instructionTable = null;
+
+            try
+            {
+                instructionTable = ParseInstructions(args);
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Unable to load instruction table. Please drag a valid instruction table onto the executable");
+                Console.ReadLine();
+                return;
+            }
 
             Processor processor = new Processor(tape, instructionTable);
 
