@@ -28,6 +28,7 @@ namespace TuringMachineTests
         public void ProcessorExecutesStartStateFollowedByNextState()
         {
             ITape mockTape = Substitute.For<ITape>();
+            mockTape.Read().Returns(' ');
             IInstructionTable mockTable = Substitute.For<IInstructionTable>();
             Processor processor = new Processor(mockTape, mockTable);
 
@@ -41,7 +42,7 @@ namespace TuringMachineTests
 
             mockTable.Received(1).GetInstruction("START");
             mockTape.Received(1).Read();
-            mockTape.Received(1).Write(null);
+            mockTape.Received(1).Write(' ');
             mockTape.Received(0).MoveRight();
             mockTape.Received(0).MoveLeft();
 
@@ -151,7 +152,7 @@ namespace TuringMachineTests
 
             mockTable.Received(0).GetInstruction(Arg.Any<String>());
             mockTape.Received(0).Read();
-            mockTape.Received(0).Write(Arg.Any<char?>());
+            mockTape.Received(0).Write(Arg.Any<char>());
             mockTape.Received(0).MoveLeft();
             mockTape.Received(0).MoveRight();
         }

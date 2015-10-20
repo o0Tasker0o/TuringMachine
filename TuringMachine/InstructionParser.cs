@@ -28,11 +28,11 @@ namespace TuringMachine
             return parsedInstruction;
         }
 
-        private static char? ParseSymbol(string symbolString)
+        private static char ParseSymbol(string symbolString)
         {
             if (string.IsNullOrEmpty(symbolString))
             {
-                return null;
+                return ' ';
             }
             else
             {

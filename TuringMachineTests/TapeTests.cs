@@ -12,7 +12,7 @@ namespace TuringMachineTests
         {
             Tape tape = new Tape();
 
-            Assert.IsNull(tape.Read());
+            Assert.AreEqual(' ', tape.Read());
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace TuringMachineTests
             tape.Write('a');
             tape.MoveLeft();
 
-            Assert.IsNull(tape.Read());
+            Assert.AreEqual(' ', tape.Read());
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace TuringMachineTests
             tape.Write('a');
             tape.MoveRight();
 
-            Assert.IsNull(tape.Read());
+            Assert.AreEqual(' ', tape.Read());
         }
 
         [TestMethod]

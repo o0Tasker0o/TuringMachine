@@ -14,6 +14,8 @@ namespace TuringMachine
         public Instruction()
         {
             MoveDirection = MoveDirection.None;
+            ReadSymbol = ' ';
+            WriteSymbol = ' ';
         }
 
         public String State
@@ -22,13 +24,13 @@ namespace TuringMachine
             set;
         }
 
-        public char? ReadSymbol
+        public char ReadSymbol
         {
             get;
             set;
         }
 
-        public char? WriteSymbol
+        public char WriteSymbol
         {
             get;
             set;

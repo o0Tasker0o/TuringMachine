@@ -34,7 +34,7 @@ namespace TuringMachine
         {
             for (int index = tape.GetIndex() - 15; index < tape.GetIndex() + 15; ++index)
             {
-                char? symbol = tape.GetSymbol(index);
+                char symbol = tape.GetSymbol(index);
                 Console.Write("|" + tape.GetSymbol(index));
             }
             Console.WriteLine();

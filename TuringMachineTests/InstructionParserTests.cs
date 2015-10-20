@@ -50,8 +50,8 @@ namespace TuringMachineTests
         public void InstructionParserTreatsBlankSymbolsAsNull()
         {
             Instruction parsedInstruction = InstructionParser.Parse("START,,,Right,HALT");
-            Assert.IsNull(parsedInstruction.ReadSymbol);
-            Assert.IsNull(parsedInstruction.WriteSymbol);
+            Assert.AreEqual(' ', parsedInstruction.ReadSymbol);
+            Assert.AreEqual(' ', parsedInstruction.WriteSymbol);
         }
     }
 }

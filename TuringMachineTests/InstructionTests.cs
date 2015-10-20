@@ -14,8 +14,8 @@ namespace TuringMachineTests
             Assert.AreEqual(null, instruction.State);
             Assert.AreEqual(null, instruction.NextState);
             Assert.AreEqual(MoveDirection.None, instruction.MoveDirection);
-            Assert.AreEqual(null, instruction.ReadSymbol);
-            Assert.AreEqual(null, instruction.WriteSymbol);
+            Assert.AreEqual(' ', instruction.ReadSymbol);
+            Assert.AreEqual(' ', instruction.WriteSymbol);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace TuringMachine
             }
 
             Instruction readInstruction = mTable.GetInstruction(mNextState);
-            char? readSymbol = mTape.Read();
+            char readSymbol = mTape.Read();
 
             if(readInstruction.ReadSymbol == readSymbol)
             {

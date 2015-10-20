@@ -5,7 +5,7 @@ namespace TuringMachine
 {
     public class Tape : ITape
     {
-        private IList<char?> mSymbols;
+        private IList<char> mSymbols;
         private int mIndex;
 
         public int GetIndex()
@@ -13,14 +13,9 @@ namespace TuringMachine
             return mIndex;
         }
 
-        public char? GetSymbol(int index)
+        public char GetSymbol(int index)
         {
             if(index < 0 || index >= mSymbols.Count)
-            {
-                return ' ';
-            }
-
-            if(null == mSymbols[index])
             {
                 return ' ';
             }
@@ -30,17 +25,17 @@ namespace TuringMachine
 
         public Tape()
         {
-            mSymbols = new List<char?>();
-            mSymbols.Add(null);
+            mSymbols = new List<char>();
+            mSymbols.Add(' ');
             mIndex = 0;
         }
 
-        public char? Read()
+        public char Read()
         {
             return mSymbols[mIndex];
         }
 
-        public void Write(char? symbol)
+        public void Write(char symbol)
         {
             mSymbols[mIndex] = symbol;
         }
@@ -49,7 +44,7 @@ namespace TuringMachine
         {
             if(mIndex == 0)
             {
-                mSymbols.Insert(0, null);
+                mSymbols.Insert(0, ' ');
             }
             else
             {
@@ -59,7 +54,7 @@ namespace TuringMachine
 
         public void MoveRight()
         {
-            mSymbols.Add(null);
+            mSymbols.Add(' ');
             ++mIndex;
         }
     }
