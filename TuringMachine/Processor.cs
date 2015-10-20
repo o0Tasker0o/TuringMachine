@@ -8,6 +8,14 @@ namespace TuringMachine
         private IInstructionTable mTable;
         private String mNextState;
 
+        public String NextState
+        {
+            get
+            {
+                return mNextState;
+            }
+        }
+
         public Processor(ITape tape, IInstructionTable table)
         {
             if(null == tape)

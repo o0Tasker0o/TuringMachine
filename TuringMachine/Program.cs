@@ -21,9 +21,34 @@ namespace TuringMachine
 
             while(true)
             {
+                DrawTape(tape);
+                DrawHead(processor);
+                Console.SetCursorPosition(0, 0);
+
                 processor.Execute();
-                Thread.Sleep(200);
+                Thread.Sleep(1000);
             }
+        }
+
+        private static void DrawTape(ITape tape)
+        {
+            for (int index = tape.GetIndex() - 15; index < tape.GetIndex() + 15; ++index)
+            {
+                char? symbol = tape.GetSymbol(index);
+                Console.Write("|" + tape.GetSymbol(index));
+            }
+            Console.WriteLine();
+        }
+
+        private static void DrawHead(Processor processor)
+        {
+            Console.WriteLine("                            _^_");
+            int stateLength = processor.NextState.Length / 2;
+            for (int index = 0; index < 29 - stateLength; index++)
+            {
+                Console.Write(" ");
+            }
+            Console.WriteLine(processor.NextState + "                                  ");
         }
     }
 }

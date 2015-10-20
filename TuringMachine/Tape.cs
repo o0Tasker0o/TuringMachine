@@ -1,11 +1,32 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace TuringMachine
 {
     public class Tape : ITape
     {
-        private List<char?> mSymbols;
+        private IList<char?> mSymbols;
         private int mIndex;
+
+        public int GetIndex()
+        {
+            return mIndex;
+        }
+
+        public char? GetSymbol(int index)
+        {
+            if(index < 0 || index >= mSymbols.Count)
+            {
+                return ' ';
+            }
+
+            if(null == mSymbols[index])
+            {
+                return ' ';
+            }
+
+            return mSymbols[index];
+        }
 
         public Tape()
         {
