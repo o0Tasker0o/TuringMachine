@@ -1,0 +1,24 @@
+START,a, ,Right,ASKR
+START,b, ,Right,BSKR
+START, , ,Left,FND
+ASKR,a,a,Right,ASKR
+ASKR,b,b,Right,ASKR
+ASKR, , ,Left,ATST
+BSKR,a,a,Right,BSKR
+BSKR,b,b,Right,BSKR
+BSKR, , ,Left,BTST
+ATST,a, ,Left,RTN
+ATST,b,b,Left,NFND
+ATST, , ,Left,FND
+BTST,a,a,Left,NFND
+BTST,b, ,Left,RTN
+BTST, , ,Left,FND
+FND, ,ASKR,None,HALT
+FND,a,ASKR,None,HALT
+FND,b,ASKR,None,HALT
+NFND, ,0,None,HALT
+NFND,a,0,None,HALT
+NFND,b,0,None,HALT
+RTN,a,a,Left,RTN
+RTN,b,b,Left,RTN
+RTN, , ,Right,START
