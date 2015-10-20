@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -31,7 +32,8 @@ namespace TuringMachine
                     break;
                 }
 
-                Thread.Sleep(400);
+                int clockDelay = Int32.Parse(ConfigurationManager.AppSettings.Get("ClockDelay"));
+                Thread.Sleep(clockDelay);
             }
 
             Console.WriteLine("Execution completed!");
