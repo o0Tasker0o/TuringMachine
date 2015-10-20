@@ -8,33 +8,20 @@ namespace TuringMachine
     {
         static void Main(string[] args)
         {
-            Console.CursorVisible = false;
-
-            String filename = "./instructions.tbl";
-
-            if(args.Length >= 1)
-            {
-                filename = args[0];
-            }
-            String[] instructionLines = File.ReadAllLines(filename);
-            IInstructionTable instructionTable = new InstructionTable();
-
-            foreach(String instructionLine in instructionLines)
-            {
-                instructionTable.AddInstruction(InstructionParser.Parse(instructionLine));
-            }
-
             ITape tape = new Tape();
+            IInstructionTable instructionTable = ParseInstructions(args);
+
             Processor processor = new Processor(tape, instructionTable);
+
+            Console.CursorVisible = false;
 
             while(true)
             {
+                Console.SetCursorPosition(0, 0);
                 DrawTape(tape);
                 DrawHead(processor);
                 Console.WriteLine();
                 Console.WriteLine("Tick: " + processor.Tick);
-
-                Console.SetCursorPosition(0, 0);
 
                 if(!processor.Execute())
                 {
@@ -44,7 +31,28 @@ namespace TuringMachine
                 Thread.Sleep(100);
             }
 
+            Console.WriteLine("Execution completed!");
             Console.ReadLine();
+        }
+
+        private static IInstructionTable ParseInstructions(string[] args)
+        {
+            String filename = "./instructions.tbl";
+
+            if (args.Length >= 1)
+            {
+                filename = args[0];
+            }
+
+            String[] instructionLines = File.ReadAllLines(filename);
+            IInstructionTable table = new InstructionTable();
+
+            foreach (String instructionLine in instructionLines)
+            {
+                table.AddInstruction(InstructionParser.Parse(instructionLine));
+            }
+
+            return table;
         }
 
         private static void DrawTape(ITape tape)
