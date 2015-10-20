@@ -19,6 +19,17 @@ namespace TuringMachine
 
             Console.CursorVisible = false;
 
+            int clockDelay = 500;
+
+            try
+            {
+                clockDelay = Int32.Parse(ConfigurationManager.AppSettings.Get("ClockDelay"));
+            }
+            catch(Exception)
+            {
+
+            }
+
             while(true)
             {
                 Console.SetCursorPosition(0, 0);
@@ -31,8 +42,6 @@ namespace TuringMachine
                 {
                     break;
                 }
-
-                int clockDelay = Int32.Parse(ConfigurationManager.AppSettings.Get("ClockDelay"));
                 Thread.Sleep(clockDelay);
             }
 
