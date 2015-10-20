@@ -19,9 +19,10 @@ namespace TuringMachine
             {
                 instructionTable = ParseInstructions(args);
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                Console.WriteLine("Unable to load instruction table. Please drag a valid instruction table onto the executable");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Failed to load instruction table. " + ex.Message);
                 Console.ReadLine();
                 return;
             }
