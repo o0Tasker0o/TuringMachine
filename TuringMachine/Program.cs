@@ -8,6 +8,8 @@ namespace TuringMachine
     {
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+
             String filename = "./instructions.tbl";
 
             if(args.Length >= 1)
