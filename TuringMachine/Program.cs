@@ -36,9 +36,15 @@ namespace TuringMachine
 
                 Console.SetCursorPosition(0, 0);
 
-                processor.Execute();
+                if(!processor.Execute())
+                {
+                    break;
+                }
+
                 Thread.Sleep(100);
             }
+
+            Console.ReadLine();
         }
 
         private static void DrawTape(ITape tape)

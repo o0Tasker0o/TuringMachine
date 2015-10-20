@@ -40,11 +40,11 @@ namespace TuringMachine
             Tick = 0;
         }
 
-        public void Execute()
+        public bool Execute()
         {
             if(mNextState == "HALT")
             {
-                return;
+                return false;
             }
 
             Instruction readInstruction = mTable.GetInstruction(mNextState);
@@ -64,6 +64,8 @@ namespace TuringMachine
 
             mNextState = readInstruction.NextStates[readSymbol];
             ++Tick;
+
+            return true;
         }
     }
 }

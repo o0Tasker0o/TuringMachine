@@ -161,5 +161,25 @@ namespace TuringMachineTests
             mockTape.Received(0).MoveLeft();
             mockTape.Received(0).MoveRight();
         }
+
+        [TestMethod]
+        public void ProcessorExecuteReturnsFalseOnHaltState()
+        {
+            ITape mockTape = Substitute.For<ITape>();
+            mockTape.Read().Returns(' ');
+            IInstructionTable mockTable = Substitute.For<IInstructionTable>();
+            Processor processor = new Processor(mockTape, mockTable);
+
+            Instruction testInstruction = new Instruction();
+            testInstruction.State = "START";
+            testInstruction.NextStates[' '] = "HALT";
+            testInstruction.WriteSymbols[' '] = ' ';
+            testInstruction.MoveDirections[' '] = MoveDirection.None;
+
+            mockTable.GetInstruction(Arg.Any<String>()).Returns(testInstruction);
+
+            Assert.IsTrue(processor.Execute());
+            Assert.IsFalse(processor.Execute());
+        }
     }
 }
