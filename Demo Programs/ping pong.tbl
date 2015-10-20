@@ -1,0 +1,5 @@
+START, ,1,Right,RUN
+LUN,1,1,Left,LUN
+LUN, ,1,Right,RUN
+RUN,1,1,Right,RUN
+RUN, ,1,Left,LUN

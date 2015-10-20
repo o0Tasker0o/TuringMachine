@@ -1,0 +1,4 @@
+START, ,1,Right,B
+START,1,1,Left,B
+B, ,1,Left,START
+B,1,1,Right,HALT

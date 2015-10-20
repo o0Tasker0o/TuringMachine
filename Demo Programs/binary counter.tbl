@@ -1,0 +1,10 @@
+START,,1,None,RUN
+RUN,,,Left,ADD
+RUN,0,0,Right,RUN
+RUN,1,1,Right,RUN
+ADD,,,Right,RUN
+ADD,0,1,Right,RUN
+ADD,1,0,Left,FLOW
+FLOW,,1,Right,RUN
+FLOW,0,1,Right,RUN
+FLOW,1,0,Left,FLOW
