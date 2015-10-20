@@ -115,5 +115,42 @@ namespace TuringMachineTests
                 Assert.AreEqual(symbols[symbolIndex], tape.Read());
             }
         }
+
+        [TestMethod]
+        public void GetSymbolReturnsBlankCharForNullElements()
+        {
+            Tape tape = new Tape();
+
+            Assert.AreEqual(' ', tape.GetSymbol(0));
+        }
+
+        [TestMethod]
+        public void GetSymbolReturnsCharStoredInTapeElements()
+        {
+            Tape tape = new Tape();
+
+            tape.Write('a');
+            Assert.AreEqual('a', tape.GetSymbol(0));
+        }
+
+        [TestMethod]
+        public void GetSymbolReturnsBlankCharForUninitialisedTapeEntries()
+        {
+            Tape tape = new Tape();
+
+            Assert.AreEqual(' ', tape.GetSymbol(-1));
+            Assert.AreEqual(' ', tape.GetSymbol(1));
+        }
+
+        [TestMethod]
+        public void GetIndexReturnsCurrentTapeIndex()
+        {
+            Tape tape = new Tape();
+
+            tape.MoveRight();
+            Assert.AreEqual(1, tape.GetIndex());
+            tape.MoveLeft();
+            Assert.AreEqual(0, tape.GetIndex());
+        }
     }
 }
