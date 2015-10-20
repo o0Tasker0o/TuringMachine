@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TuringMachine
 {
@@ -47,10 +48,31 @@ namespace TuringMachine
                 return false;
             }
 
-            Instruction readInstruction = mTable.GetInstruction(mNextState);
+            Instruction readInstruction = null;
+
+            try
+            {
+                readInstruction = mTable.GetInstruction(mNextState);
+            }
+            catch(KeyNotFoundException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Unable to find next state: " + mNextState);
+                return false;
+            }
+
             char readSymbol = mTape.Read();
 
-            mTape.Write(readInstruction.WriteSymbols[readSymbol]);
+            try
+            {
+                mTape.Write(readInstruction.WriteSymbols[readSymbol]);
+            }
+            catch(KeyNotFoundException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No action from state: " + readInstruction.State + " associated with read symbol: '" + readSymbol + "'");
+                return false;
+            }
 
             switch(readInstruction.MoveDirections[readSymbol])
             {
