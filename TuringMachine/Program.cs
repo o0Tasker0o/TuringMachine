@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 
 namespace TuringMachine
@@ -8,6 +9,8 @@ namespace TuringMachine
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.Default;
+
             ITape tape = new Tape();
             IInstructionTable instructionTable = ParseInstructions(args);
 
@@ -28,7 +31,7 @@ namespace TuringMachine
                     break;
                 }
 
-                Thread.Sleep(100);
+                Thread.Sleep(400);
             }
 
             Console.WriteLine("Execution completed!");
@@ -44,6 +47,8 @@ namespace TuringMachine
                 filename = args[0];
             }
 
+            Console.Title = "Turing Machine - " + Path.GetFileNameWithoutExtension(filename);
+
             String[] instructionLines = File.ReadAllLines(filename);
             IInstructionTable table = new InstructionTable();
 
@@ -57,19 +62,36 @@ namespace TuringMachine
 
         private static void DrawTape(ITape tape)
         {
-            for (int index = tape.GetIndex() - 15; index < tape.GetIndex() + 15; ++index)
+            int tapeViewLength = 19;
+
+            for (int index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
+            {
+                Console.Write((char)194);
+                Console.Write((char)196);
+            }
+            Console.WriteLine();
+
+            for (int index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
             {
                 char symbol = tape.GetSymbol(index);
-                Console.Write("|" + tape.GetSymbol(index));
+                Console.Write((char) 179);
+                Console.Write(tape.GetSymbol(index));
+            }
+            Console.WriteLine();
+
+            for (int index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
+            {
+                Console.Write((char)193);
+                Console.Write((char)196);
             }
             Console.WriteLine();
         }
 
         private static void DrawHead(Processor processor)
         {
-            Console.WriteLine("                              _^_");
+            Console.WriteLine("                                      _^_");
             int stateLength = processor.NextState.Length / 2;
-            for (int index = 0; index < 31 - stateLength; index++)
+            for (int index = 0; index < 39 - stateLength; index++)
             {
                 Console.Write(" ");
             }
