@@ -8,7 +8,13 @@ namespace TuringMachine
     {
         static void Main(string[] args)
         {
-            String[] instructionLines = File.ReadAllLines("./instructions.tbl");
+            String filename = "./instructions.tbl";
+
+            if(args.Length >= 1)
+            {
+                filename = args[0];
+            }
+            String[] instructionLines = File.ReadAllLines(filename);
             IInstructionTable instructionTable = new InstructionTable();
 
             foreach(String instructionLine in instructionLines)
