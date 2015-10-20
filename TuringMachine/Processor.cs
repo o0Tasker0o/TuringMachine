@@ -8,6 +8,12 @@ namespace TuringMachine
         private IInstructionTable mTable;
         private String mNextState;
 
+        public long Tick
+        {
+            get;
+            private set;
+        }
+
         public String NextState
         {
             get
@@ -31,6 +37,7 @@ namespace TuringMachine
             mTable = table;
             mTape = tape;
             mNextState = "START";
+            Tick = 0;
         }
 
         public void Execute()
@@ -56,6 +63,7 @@ namespace TuringMachine
             }
 
             mNextState = readInstruction.NextStates[readSymbol];
+            ++Tick;
         }
     }
 }

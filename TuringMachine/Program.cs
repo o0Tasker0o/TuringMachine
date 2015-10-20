@@ -23,6 +23,9 @@ namespace TuringMachine
             {
                 DrawTape(tape);
                 DrawHead(processor);
+                Console.WriteLine();
+                Console.WriteLine("Tick: " + processor.Tick);
+
                 Console.SetCursorPosition(0, 0);
 
                 processor.Execute();
