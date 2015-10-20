@@ -59,6 +59,7 @@
     <Compile Include="InstructionTableTests.cs" />
     <Compile Include="InstructionTests.cs" />
     <Compile Include="ProcessorTests.cs" />
+    <Compile Include="InstructionParserTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TuringMachine\TuringMachine.csproj">

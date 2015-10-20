@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IInstructionTable.cs" />
     <Compile Include="Instruction.cs" />
+    <Compile Include="InstructionParser.cs" />
     <Compile Include="InstructionTable.cs" />
     <Compile Include="ITape.cs" />
     <Compile Include="Processor.cs" />
