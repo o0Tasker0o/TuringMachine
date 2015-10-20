@@ -26,7 +26,7 @@ namespace TuringMachine
                 Console.SetCursorPosition(0, 0);
 
                 processor.Execute();
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
             }
         }
 
@@ -42,9 +42,9 @@ namespace TuringMachine
 
         private static void DrawHead(Processor processor)
         {
-            Console.WriteLine("                            _^_");
+            Console.WriteLine("                              _^_");
             int stateLength = processor.NextState.Length / 2;
-            for (int index = 0; index < 29 - stateLength; index++)
+            for (int index = 0; index < 31 - stateLength; index++)
             {
                 Console.Write(" ");
             }

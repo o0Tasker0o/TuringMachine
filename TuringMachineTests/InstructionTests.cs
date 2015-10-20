@@ -12,10 +12,9 @@ namespace TuringMachineTests
         {
             Instruction instruction = new Instruction();
             Assert.AreEqual(null, instruction.State);
-            Assert.AreEqual(null, instruction.NextState);
-            Assert.AreEqual(MoveDirection.None, instruction.MoveDirection);
-            Assert.AreEqual(' ', instruction.ReadSymbol);
-            Assert.AreEqual(' ', instruction.WriteSymbol);
+            Assert.AreEqual(0, instruction.NextStates.Keys.Count);
+            Assert.AreEqual(0, instruction.MoveDirections.Keys.Count);
+            Assert.AreEqual(0, instruction.WriteSymbols.Keys.Count);
         }
     }
 }

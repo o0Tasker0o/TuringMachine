@@ -40,18 +40,16 @@ namespace TuringMachineTests
         {
             Instruction parsedInstruction = InstructionParser.Parse("START,a,b,Right,HALT");
             Assert.AreEqual("START", parsedInstruction.State);
-            Assert.AreEqual('a', parsedInstruction.ReadSymbol);
-            Assert.AreEqual('b', parsedInstruction.WriteSymbol);
-            Assert.AreEqual(MoveDirection.Right, parsedInstruction.MoveDirection);
-            Assert.AreEqual("HALT", parsedInstruction.NextState);
+            Assert.AreEqual('b', parsedInstruction.WriteSymbols['a']);
+            Assert.AreEqual(MoveDirection.Right, parsedInstruction.MoveDirections['a']);
+            Assert.AreEqual("HALT", parsedInstruction.NextStates['a']);
         }
 
         [TestMethod]
         public void InstructionParserTreatsBlankSymbolsAsNull()
         {
             Instruction parsedInstruction = InstructionParser.Parse("START,,,Right,HALT");
-            Assert.AreEqual(' ', parsedInstruction.ReadSymbol);
-            Assert.AreEqual(' ', parsedInstruction.WriteSymbol);
+            Assert.AreEqual(' ', parsedInstruction.WriteSymbols[' ']);
         }
     }
 }

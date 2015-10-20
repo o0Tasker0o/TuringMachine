@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TuringMachine
 {
@@ -13,9 +14,9 @@ namespace TuringMachine
     {
         public Instruction()
         {
-            MoveDirection = MoveDirection.None;
-            ReadSymbol = ' ';
-            WriteSymbol = ' ';
+            MoveDirections = new Dictionary<char, MoveDirection>();
+            WriteSymbols = new Dictionary<char,char>();
+            NextStates = new Dictionary<char, String>();
         }
 
         public String State
@@ -24,25 +25,19 @@ namespace TuringMachine
             set;
         }
 
-        public char ReadSymbol
+        public Dictionary<char, char> WriteSymbols
         {
             get;
             set;
         }
 
-        public char WriteSymbol
+        public Dictionary<char, MoveDirection> MoveDirections
         {
             get;
             set;
         }
 
-        public MoveDirection MoveDirection
-        {
-            get;
-            set;
-        }
-
-        public String NextState
+        public Dictionary<char, String> NextStates
         {
             get;
             set;

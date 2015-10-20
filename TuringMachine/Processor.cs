@@ -43,22 +43,19 @@ namespace TuringMachine
             Instruction readInstruction = mTable.GetInstruction(mNextState);
             char readSymbol = mTape.Read();
 
-            if(readInstruction.ReadSymbol == readSymbol)
-            {
-                mTape.Write(readInstruction.WriteSymbol);
+            mTape.Write(readInstruction.WriteSymbols[readSymbol]);
 
-                switch(readInstruction.MoveDirection)
-                {
-                    case MoveDirection.Left:
-                        mTape.MoveLeft();
-                        break;
-                    case MoveDirection.Right:
-                        mTape.MoveRight();
-                        break;
-                }
+            switch(readInstruction.MoveDirections[readSymbol])
+            {
+                case MoveDirection.Left:
+                    mTape.MoveLeft();
+                    break;
+                case MoveDirection.Right:
+                    mTape.MoveRight();
+                    break;
             }
 
-            mNextState = readInstruction.NextState;
+            mNextState = readInstruction.NextStates[readSymbol];
         }
     }
 }

@@ -21,7 +21,20 @@ namespace TuringMachine
 
             if(mInstruction.ContainsKey(instruction.State))
             {
-                throw new ArgumentException("Instruction table already contains an instruction with this state name");
+                foreach(char readSymbol in instruction.WriteSymbols.Keys)
+                {
+                    mInstruction[instruction.State].WriteSymbols[readSymbol] = instruction.WriteSymbols[readSymbol];
+                }
+
+                foreach (char readSymbol in instruction.MoveDirections.Keys)
+                {
+                    mInstruction[instruction.State].MoveDirections[readSymbol] = instruction.MoveDirections[readSymbol];
+                }
+
+                foreach (char readSymbol in instruction.NextStates.Keys)
+                {
+                    mInstruction[instruction.State].NextStates[readSymbol] = instruction.NextStates[readSymbol];
+                }
             }
             else
             {

@@ -20,10 +20,12 @@ namespace TuringMachine
 
             Instruction parsedInstruction = new Instruction();
             parsedInstruction.State = elements[0];
-            parsedInstruction.ReadSymbol = ParseSymbol(elements[1]);
-            parsedInstruction.WriteSymbol = ParseSymbol(elements[2]);
-            parsedInstruction.MoveDirection = (MoveDirection) Enum.Parse(typeof(MoveDirection), elements[3]);
-            parsedInstruction.NextState = elements[4];
+
+            char readSymbol = ParseSymbol(elements[1]);
+
+            parsedInstruction.WriteSymbols[readSymbol] = ParseSymbol(elements[2]);
+            parsedInstruction.MoveDirections[readSymbol] = (MoveDirection) Enum.Parse(typeof(MoveDirection), elements[3]);
+            parsedInstruction.NextStates[readSymbol] = elements[4];
 
             return parsedInstruction;
         }

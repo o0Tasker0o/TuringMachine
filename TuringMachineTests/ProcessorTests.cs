@@ -34,7 +34,9 @@ namespace TuringMachineTests
 
             Instruction testInstruction = new Instruction();
             testInstruction.State = "START";
-            testInstruction.NextState = "A";
+            testInstruction.NextStates[' '] = "A";
+            testInstruction.WriteSymbols[' '] = ' ';
+            testInstruction.MoveDirections[' '] = MoveDirection.None;
 
             mockTable.GetInstruction(Arg.Any<String>()).Returns(testInstruction);
 
@@ -48,7 +50,7 @@ namespace TuringMachineTests
 
             processor.Execute();
 
-            mockTable.Received(1).GetInstruction(testInstruction.NextState);
+            mockTable.Received(1).GetInstruction(testInstruction.NextStates[' ']);
         }
 
         [TestMethod]
@@ -62,9 +64,9 @@ namespace TuringMachineTests
 
             Instruction moveLeftInstruction = new Instruction();
             moveLeftInstruction.State = "START";
-            moveLeftInstruction.ReadSymbol = symbol;
-            moveLeftInstruction.WriteSymbol = symbol;
-            moveLeftInstruction.MoveDirection = MoveDirection.Left;
+            moveLeftInstruction.WriteSymbols[symbol] = symbol;
+            moveLeftInstruction.MoveDirections[symbol] = MoveDirection.Left;
+            moveLeftInstruction.NextStates[symbol] = "HALT";
 
             mockTape.Read().Returns(symbol);
             mockTable.GetInstruction(Arg.Any<String>()).Returns(moveLeftInstruction);
@@ -88,9 +90,9 @@ namespace TuringMachineTests
 
             Instruction moveRightInstruction = new Instruction();
             moveRightInstruction.State = "START";
-            moveRightInstruction.ReadSymbol = symbol;
-            moveRightInstruction.WriteSymbol = symbol;
-            moveRightInstruction.MoveDirection = MoveDirection.Right;
+            moveRightInstruction.WriteSymbols[symbol] = symbol;
+            moveRightInstruction.MoveDirections[symbol] = MoveDirection.Right;
+            moveRightInstruction.NextStates[symbol] = "HALT";
 
             mockTape.Read().Returns(symbol);
             mockTable.GetInstruction(Arg.Any<String>()).Returns(moveRightInstruction);
@@ -114,9 +116,9 @@ namespace TuringMachineTests
 
             Instruction noMoveInstruction = new Instruction();
             noMoveInstruction.State = "START";
-            noMoveInstruction.ReadSymbol = symbol;
-            noMoveInstruction.WriteSymbol = symbol;
-            noMoveInstruction.MoveDirection = MoveDirection.None;
+            noMoveInstruction.WriteSymbols[symbol] = symbol;
+            noMoveInstruction.MoveDirections[symbol] = MoveDirection.None;
+            noMoveInstruction.NextStates[symbol] = "HALT";
 
             mockTape.Read().Returns(symbol);
             mockTable.GetInstruction(Arg.Any<String>()).Returns(noMoveInstruction);
@@ -134,12 +136,15 @@ namespace TuringMachineTests
         public void ProcessorExecutePerformsNoOpOnHaltState()
         {
             ITape mockTape = Substitute.For<ITape>();
+            mockTape.Read().Returns(' ');
             IInstructionTable mockTable = Substitute.For<IInstructionTable>();
             Processor processor = new Processor(mockTape, mockTable);
 
             Instruction testInstruction = new Instruction();
             testInstruction.State = "START";
-            testInstruction.NextState = "HALT";
+            testInstruction.NextStates[' '] = "HALT";
+            testInstruction.WriteSymbols[' '] = ' ';
+            testInstruction.MoveDirections[' '] = MoveDirection.None;
 
             mockTable.GetInstruction(Arg.Any<String>()).Returns(testInstruction);
 
