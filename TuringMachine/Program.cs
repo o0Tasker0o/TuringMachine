@@ -12,7 +12,17 @@ namespace TuringMachine
         {
             Console.OutputEncoding = Encoding.Default;
 
-            ITape tape = new Tape();
+            ITape tape = null;
+
+            try
+            {
+                tape = new Tape(File.ReadAllText("./init.tap"));
+            }
+            catch(Exception)
+            {
+                tape = new Tape();
+            }
+
             IInstructionTable instructionTable = null;
 
             try

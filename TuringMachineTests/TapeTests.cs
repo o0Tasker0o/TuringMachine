@@ -8,6 +8,74 @@ namespace TuringMachineTests
     public class TapeTests
     {
         [TestMethod]
+        public void TapeCanBeInitialisedWithDifferentValues()
+        {
+            Tape tape = new Tape("a,,b,,c");
+
+            Assert.AreEqual('a', tape.Read());
+            tape.MoveRight();
+            Assert.AreEqual(' ', tape.Read());
+            tape.MoveRight();
+            Assert.AreEqual('b', tape.Read());
+            tape.MoveRight();
+            Assert.AreEqual(' ', tape.Read());
+            tape.MoveRight();
+            Assert.AreEqual('c', tape.Read());
+            tape.MoveRight();
+        }
+
+        [TestMethod]
+        public void TapeCanBeInitialisedToDifferentStartPosition()
+        {
+            Tape tape = new Tape("a,,b,,c\n2");
+
+            Assert.AreEqual('b', tape.Read());
+            tape.MoveRight();
+            Assert.AreEqual(' ', tape.Read());
+            tape.MoveRight();
+            Assert.AreEqual('c', tape.Read());
+            tape.MoveRight();
+        }
+
+        [TestMethod]
+        public void TapeCanBeInitialisedWithHeadAfterInitialisedCellsAndRead()
+        {
+            Tape tape = new Tape("a,b\n2");
+
+            Assert.AreEqual(' ', tape.Read());
+            tape.Write('c');
+            Assert.AreEqual('c', tape.Read());
+        }
+
+        [TestMethod]
+        public void TapeCanBeInitialisedWithHeadBeforeInitialisedCellsAndRead()
+        {
+            Tape tape = new Tape("a,b\n-1");
+
+            Assert.AreEqual(' ', tape.Read());
+            tape.Write('c');
+            Assert.AreEqual('c', tape.Read());
+        }
+
+        [TestMethod]
+        public void TapeCanBeInitialisedWithHeadAfterInitialisedCellsAndWrittenTo()
+        {
+            Tape tape = new Tape("a,b\n2");
+
+            tape.Write('c');
+            Assert.AreEqual('c', tape.Read());
+        }
+
+        [TestMethod]
+        public void TapeCanBeInitialisedWithHeadBeforeInitialisedCellsAndWrittenTo()
+        {
+            Tape tape = new Tape("a,b\n-1");
+
+            tape.Write('c');
+            Assert.AreEqual('c', tape.Read());
+        }
+
+        [TestMethod]
         public void ReadingNewTapeReturnsNull()
         {
             Tape tape = new Tape();

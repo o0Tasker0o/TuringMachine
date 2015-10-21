@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace TuringMachine
@@ -23,6 +24,36 @@ namespace TuringMachine
             return mSymbols[index];
         }
 
+        public Tape(String initialiser)
+        {
+            mSymbols = new List<char>();
+            String[] initialiserLines = initialiser.Split('\n');
+
+            foreach (String character in initialiserLines[0].Split(','))
+            {
+                if(String.IsNullOrEmpty(character))
+                {
+                    mSymbols.Add(' ');
+                }
+                else
+                {
+                    mSymbols.Add(character[0]);
+                }
+            }
+
+            mIndex = 0;
+            if (initialiserLines.Length > 1)
+            {
+                string headPosition = initialiser.Split('\n')[1];
+
+                if (!String.IsNullOrEmpty(headPosition))
+                {
+                    mIndex = Int32.Parse(headPosition);
+                }
+            }
+
+        }
+
         public Tape()
         {
             mSymbols = new List<char>();
@@ -32,12 +63,30 @@ namespace TuringMachine
 
         public char Read()
         {
+            FillToIndex();
+
             return mSymbols[mIndex];
         }
 
         public void Write(char symbol)
         {
+            FillToIndex();
+
             mSymbols[mIndex] = symbol;
+        }
+
+        private void FillToIndex()
+        {
+            while (mIndex >= mSymbols.Count)
+            {
+                mSymbols.Add(' ');
+            }
+
+            while (mIndex < 0)
+            {
+                mIndex++;
+                mSymbols.Insert(0, ' ');
+            }
         }
 
         public void MoveLeft()
