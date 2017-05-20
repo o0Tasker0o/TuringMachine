@@ -1,110 +1,102 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace TuringMachine
 {
 	public class Tape : ITape
 	{
-		private IList<char> mSymbols;
-		private int mIndex;
+		private readonly IList<char> _symbols;
+		private int _index;
 
 		public int GetIndex()
 		{
-			return mIndex;
+			return _index;
 		}
 
 		public char GetSymbol(int index)
 		{
-			if (index < 0 || index >= mSymbols.Count)
+			if (index < 0 || index >= _symbols.Count)
 			{
 				return ' ';
 			}
 
-			return mSymbols[index];
+			return _symbols[index];
 		}
 
-		public Tape(String initialiser)
+		public Tape(string initialiser)
 		{
-			mSymbols = new List<char>();
-			String[] initialiserLines = initialiser.Split('\n');
+			_symbols = new List<char>();
+			var initialiserLines = initialiser.Split('\n');
 
-			foreach (String character in initialiserLines[0].Split(','))
+			foreach (var character in initialiserLines[0].Split(','))
 			{
-				if (String.IsNullOrEmpty(character))
-				{
-					mSymbols.Add(' ');
-				}
-				else
-				{
-					mSymbols.Add(character[0]);
-				}
+				_symbols.Add(string.IsNullOrEmpty(character) ? ' ' : character[0]);
 			}
 
-			mIndex = 0;
-			if (initialiserLines.Length > 1)
+			_index = 0;
+			if (initialiserLines.Length <= 1)
 			{
-				string headPosition = initialiser.Split('\n')[1];
-
-				if (!String.IsNullOrEmpty(headPosition))
-				{
-					mIndex = Int32.Parse(headPosition);
-				}
+				return;
 			}
 
+			var headPosition = initialiser.Split('\n')[1];
+
+			if (!string.IsNullOrEmpty(headPosition))
+			{
+				_index = int.Parse(headPosition);
+			}
 		}
 
 		public Tape()
 		{
-			mSymbols = new List<char>();
-			mSymbols.Add(' ');
-			mIndex = 0;
+			_symbols = new List<char> {' '};
+			_index = 0;
 		}
 
 		public char Read()
 		{
 			FillToIndex();
 
-			return mSymbols[mIndex];
+			return _symbols[_index];
 		}
 
 		public void Write(char symbol)
 		{
 			FillToIndex();
 
-			mSymbols[mIndex] = symbol;
+			_symbols[_index] = symbol;
 		}
 
 		private void FillToIndex()
 		{
-			while (mIndex >= mSymbols.Count)
+			while (_index >= _symbols.Count)
 			{
-				mSymbols.Add(' ');
+				_symbols.Add(' ');
 			}
 
-			while (mIndex < 0)
+			while (_index < 0)
 			{
-				mIndex++;
-				mSymbols.Insert(0, ' ');
+				_index++;
+				_symbols.Insert(0, ' ');
 			}
 		}
 
 		public void MoveLeft()
 		{
-			if (mIndex == 0)
+			if (_index == 0)
 			{
-				mSymbols.Insert(0, ' ');
+				_symbols.Insert(0, ' ');
 			}
 			else
 			{
-				--mIndex;
+				--_index;
 			}
 		}
 
 		public void MoveRight()
 		{
-			mSymbols.Add(' ');
-			++mIndex;
+			_symbols.Add(' ');
+			++_index;
 		}
 	}
 }

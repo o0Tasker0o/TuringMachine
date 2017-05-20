@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Text;
@@ -6,13 +7,13 @@ using System.Threading;
 
 namespace TuringMachine
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			Console.OutputEncoding = Encoding.Default;
 
-			ITape tape = null;
+			ITape tape;
 
 			try
 			{
@@ -23,7 +24,7 @@ namespace TuringMachine
 				tape = new Tape();
 			}
 
-			IInstructionTable instructionTable = null;
+			IInstructionTable instructionTable;
 
 			try
 			{
@@ -37,15 +38,15 @@ namespace TuringMachine
 				return;
 			}
 
-			Processor processor = new Processor(tape, instructionTable);
+			var processor = new Processor(tape, instructionTable);
 
 			Console.CursorVisible = false;
 
-			int clockDelay = 500;
+			var clockDelay = 500;
 
 			try
 			{
-				clockDelay = Int32.Parse(ConfigurationManager.AppSettings.Get("ClockDelay"));
+				clockDelay = int.Parse(ConfigurationManager.AppSettings.Get("ClockDelay"));
 			}
 			catch (Exception)
 			{
@@ -71,21 +72,21 @@ namespace TuringMachine
 			Console.ReadLine();
 		}
 
-		private static IInstructionTable ParseInstructions(string[] args)
+		private static IInstructionTable ParseInstructions(IReadOnlyList<string> args)
 		{
-			String filename = "./instructions.tbl";
+			var filename = "./instructions.tbl";
 
-			if (args.Length >= 1)
+			if (args.Count >= 1)
 			{
 				filename = args[0];
 			}
 
 			Console.Title = "Turing Machine - " + Path.GetFileNameWithoutExtension(filename);
 
-			String[] instructionLines = File.ReadAllLines(filename);
+			var instructionLines = File.ReadAllLines(filename);
 			IInstructionTable table = new InstructionTable();
 
-			foreach (String instructionLine in instructionLines)
+			foreach (var instructionLine in instructionLines)
 			{
 				table.AddInstruction(InstructionParser.Parse(instructionLine));
 			}
@@ -95,24 +96,23 @@ namespace TuringMachine
 
 		private static void DrawTape(ITape tape)
 		{
-			int tapeViewLength = 19;
+			const int tapeViewLength = 19;
 
-			for (int index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
+			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
 			{
 				Console.Write((char)194);
 				Console.Write((char)196);
 			}
 			Console.WriteLine();
 
-			for (int index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
+			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
 			{
-				char symbol = tape.GetSymbol(index);
 				Console.Write((char)179);
 				Console.Write(tape.GetSymbol(index));
 			}
 			Console.WriteLine();
 
-			for (int index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
+			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
 			{
 				Console.Write((char)193);
 				Console.Write((char)196);
@@ -123,8 +123,8 @@ namespace TuringMachine
 		private static void DrawHead(Processor processor)
 		{
 			Console.WriteLine("                                      _^_");
-			int stateLength = processor.NextState.Length / 2;
-			for (int index = 0; index < 39 - stateLength; index++)
+			var stateLength = processor.NextState.Length / 2;
+			for (var index = 0; index < 39 - stateLength; index++)
 			{
 				Console.Write(" ");
 			}

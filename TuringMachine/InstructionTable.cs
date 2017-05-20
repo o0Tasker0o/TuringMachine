@@ -5,11 +5,11 @@ namespace TuringMachine
 {
 	public class InstructionTable : IInstructionTable
 	{
-		private Dictionary<String, Instruction> mInstruction;
+		private readonly Dictionary<string, Instruction> _instruction;
 
 		public InstructionTable()
 		{
-			mInstruction = new Dictionary<String, Instruction>();
+			_instruction = new Dictionary<string, Instruction>();
 		}
 
 		public void AddInstruction(Instruction instruction)
@@ -19,32 +19,32 @@ namespace TuringMachine
 				throw new ArgumentNullException("Instruction must not be null");
 			}
 
-			if (mInstruction.ContainsKey(instruction.State))
+			if (_instruction.ContainsKey(instruction.State))
 			{
-				foreach (char readSymbol in instruction.WriteSymbols.Keys)
+				foreach (var readSymbol in instruction.WriteSymbols.Keys)
 				{
-					mInstruction[instruction.State].WriteSymbols[readSymbol] = instruction.WriteSymbols[readSymbol];
+					_instruction[instruction.State].WriteSymbols[readSymbol] = instruction.WriteSymbols[readSymbol];
 				}
 
-				foreach (char readSymbol in instruction.MoveDirections.Keys)
+				foreach (var readSymbol in instruction.MoveDirections.Keys)
 				{
-					mInstruction[instruction.State].MoveDirections[readSymbol] = instruction.MoveDirections[readSymbol];
+					_instruction[instruction.State].MoveDirections[readSymbol] = instruction.MoveDirections[readSymbol];
 				}
 
-				foreach (char readSymbol in instruction.NextStates.Keys)
+				foreach (var readSymbol in instruction.NextStates.Keys)
 				{
-					mInstruction[instruction.State].NextStates[readSymbol] = instruction.NextStates[readSymbol];
+					_instruction[instruction.State].NextStates[readSymbol] = instruction.NextStates[readSymbol];
 				}
 			}
 			else
 			{
-				mInstruction.Add(instruction.State, instruction);
+				_instruction.Add(instruction.State, instruction);
 			}
 		}
 
-		public Instruction GetInstruction(String instructionState)
+		public Instruction GetInstruction(string instructionState)
 		{
-			return mInstruction[instructionState];
+			return _instruction[instructionState];
 		}
 	}
 }

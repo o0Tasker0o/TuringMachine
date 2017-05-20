@@ -5,9 +5,8 @@ namespace TuringMachine
 {
 	public class Processor
 	{
-		private ITape mTape;
-		private IInstructionTable mTable;
-		private String mNextState;
+		private readonly ITape _tape;
+		private readonly IInstructionTable _table;
 
 		public long Tick
 		{
@@ -15,13 +14,7 @@ namespace TuringMachine
 			private set;
 		}
 
-		public String NextState
-		{
-			get
-			{
-				return mNextState;
-			}
-		}
+		public string NextState { get; private set; }
 
 		public Processor(ITape tape, IInstructionTable table)
 		{
@@ -35,56 +28,60 @@ namespace TuringMachine
 				throw new ArgumentNullException("Instruction table must not be null");
 			}
 
-			mTable = table;
-			mTape = tape;
-			mNextState = "START";
+			_table = table;
+			_tape = tape;
+			NextState = "START";
 			Tick = 0;
 		}
 
 		public bool Execute()
 		{
-			if (mNextState == "HALT")
+			if (NextState == "HALT")
 			{
 				return false;
 			}
 
-			Instruction readInstruction = null;
+			Instruction readInstruction;
 
 			try
 			{
-				readInstruction = mTable.GetInstruction(mNextState);
+				readInstruction = _table.GetInstruction(NextState);
 			}
 			catch (KeyNotFoundException)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine("Unable to find next state: " + mNextState);
+				Console.WriteLine($"Unable to find next state: {NextState}");
 				return false;
 			}
 
-			char readSymbol = mTape.Read();
+			var readSymbol = _tape.Read();
 
 			try
 			{
-				mTape.Write(readInstruction.WriteSymbols[readSymbol]);
+				_tape.Write(readInstruction.WriteSymbols[readSymbol]);
 			}
 			catch (KeyNotFoundException)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine("No action from state: " + readInstruction.State + " associated with read symbol: '" + readSymbol + "'");
+				Console.WriteLine($"No action from state: {readInstruction.State} associated with read symbol: '{readSymbol}'");
 				return false;
 			}
 
 			switch (readInstruction.MoveDirections[readSymbol])
 			{
 				case MoveDirection.Left:
-					mTape.MoveLeft();
+					_tape.MoveLeft();
 					break;
 				case MoveDirection.Right:
-					mTape.MoveRight();
+					_tape.MoveRight();
 					break;
+				case MoveDirection.None:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 
-			mNextState = readInstruction.NextStates[readSymbol];
+			NextState = readInstruction.NextStates[readSymbol];
 			++Tick;
 
 			return true;

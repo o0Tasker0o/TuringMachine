@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TuringMachine
 {
@@ -16,10 +15,10 @@ namespace TuringMachine
 		{
 			MoveDirections = new Dictionary<char, MoveDirection>();
 			WriteSymbols = new Dictionary<char, char>();
-			NextStates = new Dictionary<char, String>();
+			NextStates = new Dictionary<char, string>();
 		}
 
-		public String State
+		public string State
 		{
 			get;
 			set;
@@ -37,7 +36,7 @@ namespace TuringMachine
 			set;
 		}
 
-		public Dictionary<char, String> NextStates
+		public Dictionary<char, string> NextStates
 		{
 			get;
 			set;

@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-namespace TuringMachine
+﻿namespace TuringMachine
 {
 	public interface ITape
 	{
