@@ -9,6 +9,8 @@ namespace TuringMachine
 {
 	internal class Program
 	{
+		private static TapeRenderer _tapeRenderer;
+
 		private static void Main(string[] args)
 		{
 			Console.OutputEncoding = Encoding.Default;
@@ -39,6 +41,7 @@ namespace TuringMachine
 			}
 
 			var processor = new Processor(tape, instructionTable);
+			_tapeRenderer = new TapeRenderer(tape, processor);
 
 			Console.CursorVisible = false;
 
@@ -56,8 +59,11 @@ namespace TuringMachine
 			while (true)
 			{
 				Console.SetCursorPosition(0, 0);
-				DrawTape(tape);
-				DrawHead(processor);
+
+				Console.WriteLine(_tapeRenderer.RenderTape());
+				Console.WriteLine(_tapeRenderer.RenderHead());
+				Console.WriteLine(_tapeRenderer.RenderStateInfo());
+
 				Console.WriteLine();
 				Console.WriteLine("Tick: " + processor.Tick);
 
@@ -92,43 +98,6 @@ namespace TuringMachine
 			}
 
 			return table;
-		}
-
-		private static void DrawTape(ITape tape)
-		{
-			const int tapeViewLength = 19;
-
-			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
-			{
-				Console.Write('+');
-				Console.Write('-');
-			}
-			Console.WriteLine();
-
-			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
-			{
-				Console.Write('|');
-				Console.Write(tape.GetSymbol(index));
-			}
-			Console.WriteLine();
-
-			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
-			{
-				Console.Write('+');
-				Console.Write('-');
-			}
-			Console.WriteLine();
-		}
-
-		private static void DrawHead(Processor processor)
-		{
-			Console.WriteLine("                                      _^_");
-			var stateLength = processor.NextState.Length / 2;
-			for (var index = 0; index < 39 - stateLength; index++)
-			{
-				Console.Write(" ");
-			}
-			Console.WriteLine(processor.NextState + "                                  ");
 		}
 	}
 }
