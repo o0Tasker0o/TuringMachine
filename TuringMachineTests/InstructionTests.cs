@@ -10,7 +10,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void InstructionIsConstructedWithDefaultValues()
         {
-            Instruction instruction = new Instruction();
+            var instruction = new Instruction();
             Assert.AreEqual(null, instruction.State);
             Assert.AreEqual(0, instruction.NextStates.Keys.Count);
             Assert.AreEqual(0, instruction.MoveDirections.Keys.Count);

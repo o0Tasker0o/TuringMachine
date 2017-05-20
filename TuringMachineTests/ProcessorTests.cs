@@ -12,33 +12,33 @@ namespace TuringMachineTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void ProcessorThrowsExceptionOnNullTape()
         {
-            IInstructionTable mockTable = Substitute.For<IInstructionTable>();
-            Processor processor = new Processor(null, mockTable);
+            var mockTable = Substitute.For<IInstructionTable>();
+            var processor = new Processor(null, mockTable);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ProcessorThrowsExceptionOnNullInstructionTable()
         {
-            ITape mockTape = Substitute.For<ITape>();
-            Processor processor = new Processor(mockTape, null);
+            var mockTape = Substitute.For<ITape>();
+            var processor = new Processor(mockTape, null);
         }
 
         [TestMethod]
         public void ProcessorExecutesStartStateFollowedByNextState()
         {
-            ITape mockTape = Substitute.For<ITape>();
+            var mockTape = Substitute.For<ITape>();
             mockTape.Read().Returns(' ');
-            IInstructionTable mockTable = Substitute.For<IInstructionTable>();
-            Processor processor = new Processor(mockTape, mockTable);
+            var mockTable = Substitute.For<IInstructionTable>();
+            var processor = new Processor(mockTape, mockTable);
 
-            Instruction testInstruction = new Instruction();
+            var testInstruction = new Instruction();
             testInstruction.State = "START";
             testInstruction.NextStates[' '] = "A";
             testInstruction.WriteSymbols[' '] = ' ';
             testInstruction.MoveDirections[' '] = MoveDirection.None;
 
-            mockTable.GetInstruction(Arg.Any<String>()).Returns(testInstruction);
+            mockTable.GetInstruction(Arg.Any<string>()).Returns(testInstruction);
 
             processor.Execute();
 
@@ -56,20 +56,20 @@ namespace TuringMachineTests
         [TestMethod]
         public void ProcessorMovesTapeLeftOnLeftInstruction()
         {
-            ITape mockTape = Substitute.For<ITape>();
-            IInstructionTable mockTable = Substitute.For<IInstructionTable>();
-            Processor processor = new Processor(mockTape, mockTable);
+            var mockTape = Substitute.For<ITape>();
+            var mockTable = Substitute.For<IInstructionTable>();
+            var processor = new Processor(mockTape, mockTable);
 
-            char symbol = 'a';
+            const char symbol = 'a';
 
-            Instruction moveLeftInstruction = new Instruction();
+            var moveLeftInstruction = new Instruction();
             moveLeftInstruction.State = "START";
             moveLeftInstruction.WriteSymbols[symbol] = symbol;
             moveLeftInstruction.MoveDirections[symbol] = MoveDirection.Left;
             moveLeftInstruction.NextStates[symbol] = "HALT";
 
             mockTape.Read().Returns(symbol);
-            mockTable.GetInstruction(Arg.Any<String>()).Returns(moveLeftInstruction);
+            mockTable.GetInstruction(Arg.Any<string>()).Returns(moveLeftInstruction);
 
             processor.Execute();
 
@@ -82,20 +82,20 @@ namespace TuringMachineTests
         [TestMethod]
         public void ProcessorMovesTapeRightOnRightInstruction()
         {
-            ITape mockTape = Substitute.For<ITape>();
-            IInstructionTable mockTable = Substitute.For<IInstructionTable>();
-            Processor processor = new Processor(mockTape, mockTable);
+            var mockTape = Substitute.For<ITape>();
+            var mockTable = Substitute.For<IInstructionTable>();
+            var processor = new Processor(mockTape, mockTable);
 
-            char symbol = 'a';
+            const char symbol = 'a';
 
-            Instruction moveRightInstruction = new Instruction();
+            var moveRightInstruction = new Instruction();
             moveRightInstruction.State = "START";
             moveRightInstruction.WriteSymbols[symbol] = symbol;
             moveRightInstruction.MoveDirections[symbol] = MoveDirection.Right;
             moveRightInstruction.NextStates[symbol] = "HALT";
 
             mockTape.Read().Returns(symbol);
-            mockTable.GetInstruction(Arg.Any<String>()).Returns(moveRightInstruction);
+            mockTable.GetInstruction(Arg.Any<string>()).Returns(moveRightInstruction);
 
             processor.Execute();
 
@@ -108,20 +108,20 @@ namespace TuringMachineTests
         [TestMethod]
         public void ProcessorDoesNotMoveTapeOnNoMoveInstruction()
         {
-            ITape mockTape = Substitute.For<ITape>();
-            IInstructionTable mockTable = Substitute.For<IInstructionTable>();
-            Processor processor = new Processor(mockTape, mockTable);
+            var mockTape = Substitute.For<ITape>();
+            var mockTable = Substitute.For<IInstructionTable>();
+            var processor = new Processor(mockTape, mockTable);
 
-            char symbol = 'a';
+            const char symbol = 'a';
 
-            Instruction noMoveInstruction = new Instruction();
+            var noMoveInstruction = new Instruction();
             noMoveInstruction.State = "START";
             noMoveInstruction.WriteSymbols[symbol] = symbol;
             noMoveInstruction.MoveDirections[symbol] = MoveDirection.None;
             noMoveInstruction.NextStates[symbol] = "HALT";
 
             mockTape.Read().Returns(symbol);
-            mockTable.GetInstruction(Arg.Any<String>()).Returns(noMoveInstruction);
+            mockTable.GetInstruction(Arg.Any<string>()).Returns(noMoveInstruction);
 
             processor.Execute();
 
@@ -135,18 +135,18 @@ namespace TuringMachineTests
         [TestMethod]
         public void ProcessorExecutePerformsNoOpOnHaltState()
         {
-            ITape mockTape = Substitute.For<ITape>();
+            var mockTape = Substitute.For<ITape>();
             mockTape.Read().Returns(' ');
-            IInstructionTable mockTable = Substitute.For<IInstructionTable>();
-            Processor processor = new Processor(mockTape, mockTable);
+            var mockTable = Substitute.For<IInstructionTable>();
+            var processor = new Processor(mockTape, mockTable);
 
-            Instruction testInstruction = new Instruction();
+            var testInstruction = new Instruction();
             testInstruction.State = "START";
             testInstruction.NextStates[' '] = "HALT";
             testInstruction.WriteSymbols[' '] = ' ';
             testInstruction.MoveDirections[' '] = MoveDirection.None;
 
-            mockTable.GetInstruction(Arg.Any<String>()).Returns(testInstruction);
+            mockTable.GetInstruction(Arg.Any<string>()).Returns(testInstruction);
 
             processor.Execute();
 
@@ -155,7 +155,7 @@ namespace TuringMachineTests
 
             processor.Execute();
 
-            mockTable.Received(0).GetInstruction(Arg.Any<String>());
+            mockTable.Received(0).GetInstruction(Arg.Any<string>());
             mockTape.Received(0).Read();
             mockTape.Received(0).Write(Arg.Any<char>());
             mockTape.Received(0).MoveLeft();
@@ -165,18 +165,18 @@ namespace TuringMachineTests
         [TestMethod]
         public void ProcessorExecuteReturnsFalseOnHaltState()
         {
-            ITape mockTape = Substitute.For<ITape>();
+            var mockTape = Substitute.For<ITape>();
             mockTape.Read().Returns(' ');
-            IInstructionTable mockTable = Substitute.For<IInstructionTable>();
-            Processor processor = new Processor(mockTape, mockTable);
+            var mockTable = Substitute.For<IInstructionTable>();
+            var processor = new Processor(mockTape, mockTable);
 
-            Instruction testInstruction = new Instruction();
+            var testInstruction = new Instruction();
             testInstruction.State = "START";
             testInstruction.NextStates[' '] = "HALT";
             testInstruction.WriteSymbols[' '] = ' ';
             testInstruction.MoveDirections[' '] = MoveDirection.None;
 
-            mockTable.GetInstruction(Arg.Any<String>()).Returns(testInstruction);
+            mockTable.GetInstruction(Arg.Any<string>()).Returns(testInstruction);
 
             Assert.IsTrue(processor.Execute());
             Assert.IsFalse(processor.Execute());

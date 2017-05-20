@@ -10,7 +10,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void TapeCanBeInitialisedWithDifferentValues()
         {
-            Tape tape = new Tape("a,,b,,c");
+            var tape = new Tape("a,,b,,c");
 
             Assert.AreEqual('a', tape.Read());
             tape.MoveRight();
@@ -27,7 +27,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void TapeCanBeInitialisedToDifferentStartPosition()
         {
-            Tape tape = new Tape("a,,b,,c\n2");
+            var tape = new Tape("a,,b,,c\n2");
 
             Assert.AreEqual('b', tape.Read());
             tape.MoveRight();
@@ -40,7 +40,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void TapeCanBeInitialisedWithHeadAfterInitialisedCellsAndRead()
         {
-            Tape tape = new Tape("a,b\n2");
+            var tape = new Tape("a,b\n2");
 
             Assert.AreEqual(' ', tape.Read());
             tape.Write('c');
@@ -50,7 +50,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void TapeCanBeInitialisedWithHeadBeforeInitialisedCellsAndRead()
         {
-            Tape tape = new Tape("a,b\n-1");
+            var tape = new Tape("a,b\n-1");
 
             Assert.AreEqual(' ', tape.Read());
             tape.Write('c');
@@ -60,7 +60,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void TapeCanBeInitialisedWithHeadAfterInitialisedCellsAndWrittenTo()
         {
-            Tape tape = new Tape("a,b\n2");
+            var tape = new Tape("a,b\n2");
 
             tape.Write('c');
             Assert.AreEqual('c', tape.Read());
@@ -69,7 +69,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void TapeCanBeInitialisedWithHeadBeforeInitialisedCellsAndWrittenTo()
         {
-            Tape tape = new Tape("a,b\n-1");
+            var tape = new Tape("a,b\n-1");
 
             tape.Write('c');
             Assert.AreEqual('c', tape.Read());
@@ -78,7 +78,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void ReadingNewTapeReturnsNull()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
             Assert.AreEqual(' ', tape.Read());
         }
@@ -86,9 +86,9 @@ namespace TuringMachineTests
         [TestMethod]
         public void ReadReturnsLastWrittenCharacter()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
-            char symbol = 'a';
+            const char symbol = 'a';
             tape.Write(symbol);
 
             Assert.AreEqual(symbol, tape.Read());
@@ -97,7 +97,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void MovingTapeLeftBringsBlankCellIntoView()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
             tape.Write('a');
             tape.MoveLeft();
@@ -108,7 +108,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void MovingTapeRightBringsBlankCellIntoView()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
             tape.Write('a');
             tape.MoveRight();
@@ -119,9 +119,9 @@ namespace TuringMachineTests
         [TestMethod]
         public void MovingTapeLeftThenRightReturnsTapeToOriginalPosition()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
-            char symbol = 'a';
+            const char symbol = 'a';
 
             tape.Write(symbol);
             tape.MoveLeft();
@@ -133,9 +133,9 @@ namespace TuringMachineTests
         [TestMethod]
         public void MovingTapeRightThenLeftReturnsTapeToOriginalPosition()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
-            char symbol = 'a';
+            const char symbol = 'a';
 
             tape.Write(symbol);
             tape.MoveRight();
@@ -147,17 +147,17 @@ namespace TuringMachineTests
         [TestMethod]
         public void TapeStoresAllWrittenSymbolsAsItMovesRight()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
-            List<char> symbols = new List<char>() { 'a', 'b', 'c', 'd' };
+            var symbols = new List<char> { 'a', 'b', 'c', 'd' };
 
-            for(int symbolIndex = 0; symbolIndex < symbols.Count; ++symbolIndex)
+            foreach (var symbol in symbols)
             {
-                tape.Write(symbols[symbolIndex]);
+                tape.Write(symbol);
                 tape.MoveRight();
             }
 
-            for (int symbolIndex = symbols.Count - 1; symbolIndex >= 0; --symbolIndex)
+            for (var symbolIndex = symbols.Count - 1; symbolIndex >= 0; --symbolIndex)
             {
                 tape.MoveLeft();
                 Assert.AreEqual(symbols[symbolIndex], tape.Read());
@@ -167,17 +167,17 @@ namespace TuringMachineTests
         [TestMethod]
         public void TapeStoresAllWrittenSymbolsAsItMovesLeft()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
-            List<char> symbols = new List<char>() { 'a', 'b', 'c', 'd' };
+            var symbols = new List<char> { 'a', 'b', 'c', 'd' };
 
-            for (int symbolIndex = 0; symbolIndex < symbols.Count; ++symbolIndex)
+            foreach (var symbol in symbols)
             {
-                tape.Write(symbols[symbolIndex]);
-                tape.MoveLeft();
+	            tape.Write(symbol);
+	            tape.MoveLeft();
             }
 
-            for (int symbolIndex = symbols.Count - 1; symbolIndex >= 0; --symbolIndex)
+            for (var symbolIndex = symbols.Count - 1; symbolIndex >= 0; --symbolIndex)
             {
                 tape.MoveRight();
                 Assert.AreEqual(symbols[symbolIndex], tape.Read());
@@ -187,7 +187,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void GetSymbolReturnsBlankCharForNullElements()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
             Assert.AreEqual(' ', tape.GetSymbol(0));
         }
@@ -195,7 +195,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void GetSymbolReturnsCharStoredInTapeElements()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
             tape.Write('a');
             Assert.AreEqual('a', tape.GetSymbol(0));
@@ -204,7 +204,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void GetSymbolReturnsBlankCharForUninitialisedTapeEntries()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
             Assert.AreEqual(' ', tape.GetSymbol(-1));
             Assert.AreEqual(' ', tape.GetSymbol(1));
@@ -213,7 +213,7 @@ namespace TuringMachineTests
         [TestMethod]
         public void GetIndexReturnsCurrentTapeIndex()
         {
-            Tape tape = new Tape();
+            var tape = new Tape();
 
             tape.MoveRight();
             Assert.AreEqual(1, tape.GetIndex());
