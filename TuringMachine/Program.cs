@@ -100,22 +100,22 @@ namespace TuringMachine
 
 			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
 			{
-				Console.Write((char)194);
-				Console.Write((char)196);
+				Console.Write('+');
+				Console.Write('-');
 			}
 			Console.WriteLine();
 
 			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
 			{
-				Console.Write((char)179);
+				Console.Write('|');
 				Console.Write(tape.GetSymbol(index));
 			}
 			Console.WriteLine();
 
 			for (var index = tape.GetIndex() - tapeViewLength; index < tape.GetIndex() + tapeViewLength; ++index)
 			{
-				Console.Write((char)193);
-				Console.Write((char)196);
+				Console.Write('+');
+				Console.Write('-');
 			}
 			Console.WriteLine();
 		}
