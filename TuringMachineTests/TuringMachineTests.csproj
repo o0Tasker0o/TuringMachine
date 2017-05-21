@@ -54,6 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TapeRendererTests.cs" />
     <Compile Include="TapeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InstructionTableTests.cs" />
