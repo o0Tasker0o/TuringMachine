@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
+using System.Collections.Generic;
+using NSubstitute.ExceptionExtensions;
 using TuringMachine;
 
 namespace TuringMachineTests
@@ -191,6 +193,19 @@ namespace TuringMachineTests
 			mockTable.GetInstruction(Arg.Any<string>()).Returns(testInstruction);
 
 			Assert.IsTrue(processor.Execute());
+			Assert.IsFalse(processor.Execute());
+		}
+
+		[TestMethod]
+		public void ProcessorExecuteReturnsFalseWhenNextStateNotFound()
+		{
+			var mockTape = Substitute.For<ITape>();
+			mockTape.Read().Returns(' ');
+			var mockTable = Substitute.For<IInstructionTable>();
+			var processor = new Processor(mockTape, mockTable);
+
+			mockTable.GetInstruction(Arg.Any<string>()).Throws(new KeyNotFoundException());
+
 			Assert.IsFalse(processor.Execute());
 		}
 	}
